@@ -10,7 +10,10 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as DevisRouteImport } from './routes/devis'
 import { Route as MarquesRouteImport } from './routes/marques'
+import { Route as QuiSommesNousRouteImport } from './routes/qui-sommes-nous'
 import { Route as ReferencesIndexRouteImport } from './routes/references.index'
 import { Route as ReferencesSlugRouteImport } from './routes/references.$slug'
 import { Route as SolutionsIndexRouteImport } from './routes/solutions.index'
@@ -21,9 +24,24 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DevisRoute = DevisRouteImport.update({
+  id: '/devis',
+  path: '/devis',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MarquesRoute = MarquesRouteImport.update({
   id: '/marques',
   path: '/marques',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuiSommesNousRoute = QuiSommesNousRouteImport.update({
+  id: '/qui-sommes-nous',
+  path: '/qui-sommes-nous',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ReferencesIndexRoute = ReferencesIndexRouteImport.update({
@@ -49,7 +67,10 @@ const SolutionsSlugRoute = SolutionsSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
+  '/devis': typeof DevisRoute
   '/marques': typeof MarquesRoute
+  '/qui-sommes-nous': typeof QuiSommesNousRoute
   '/references/$slug': typeof ReferencesSlugRoute
   '/solutions/$slug': typeof SolutionsSlugRoute
   '/references/': typeof ReferencesIndexRoute
@@ -57,7 +78,10 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
+  '/devis': typeof DevisRoute
   '/marques': typeof MarquesRoute
+  '/qui-sommes-nous': typeof QuiSommesNousRoute
   '/references/$slug': typeof ReferencesSlugRoute
   '/solutions/$slug': typeof SolutionsSlugRoute
   '/references': typeof ReferencesIndexRoute
@@ -66,7 +90,10 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
+  '/devis': typeof DevisRoute
   '/marques': typeof MarquesRoute
+  '/qui-sommes-nous': typeof QuiSommesNousRoute
   '/references/$slug': typeof ReferencesSlugRoute
   '/solutions/$slug': typeof SolutionsSlugRoute
   '/references/': typeof ReferencesIndexRoute
@@ -76,7 +103,10 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/contact'
+    | '/devis'
     | '/marques'
+    | '/qui-sommes-nous'
     | '/references/$slug'
     | '/solutions/$slug'
     | '/references/'
@@ -84,7 +114,10 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/contact'
+    | '/devis'
     | '/marques'
+    | '/qui-sommes-nous'
     | '/references/$slug'
     | '/solutions/$slug'
     | '/references'
@@ -92,7 +125,10 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/contact'
+    | '/devis'
     | '/marques'
+    | '/qui-sommes-nous'
     | '/references/$slug'
     | '/solutions/$slug'
     | '/references/'
@@ -101,7 +137,10 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ContactRoute: typeof ContactRoute
+  DevisRoute: typeof DevisRoute
   MarquesRoute: typeof MarquesRoute
+  QuiSommesNousRoute: typeof QuiSommesNousRoute
   ReferencesSlugRoute: typeof ReferencesSlugRoute
   SolutionsSlugRoute: typeof SolutionsSlugRoute
   ReferencesIndexRoute: typeof ReferencesIndexRoute
@@ -117,11 +156,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/devis': {
+      id: '/devis'
+      path: '/devis'
+      fullPath: '/devis'
+      preLoaderRoute: typeof DevisRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/marques': {
       id: '/marques'
       path: '/marques'
       fullPath: '/marques'
       preLoaderRoute: typeof MarquesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/qui-sommes-nous': {
+      id: '/qui-sommes-nous'
+      path: '/qui-sommes-nous'
+      fullPath: '/qui-sommes-nous'
+      preLoaderRoute: typeof QuiSommesNousRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/references/': {
@@ -157,7 +217,10 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ContactRoute: ContactRoute,
+  DevisRoute: DevisRoute,
   MarquesRoute: MarquesRoute,
+  QuiSommesNousRoute: QuiSommesNousRoute,
   ReferencesSlugRoute: ReferencesSlugRoute,
   SolutionsSlugRoute: SolutionsSlugRoute,
   ReferencesIndexRoute: ReferencesIndexRoute,
