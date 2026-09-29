@@ -11,7 +11,7 @@ export const site = {
   baseline:
     "Distributeur de référence de la sécurité électronique et du courant faible au Maroc.",
   foundedYear: 2009,
-  storeUrl: "https://districap.ma",
+  storeUrl: "https://districap-ma.izemxlab.com/",
   phones: ["05 22 34 36 30", "06 68 49 93 59"],
   whatsapp: {
     number: "212668499359",

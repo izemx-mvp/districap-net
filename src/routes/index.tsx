@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type MouseEvent } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "motion/react";
 import {
@@ -104,6 +104,19 @@ const method = [
   { title: "Accompagnement", text: "Support technique, formation et suivi tout au long du projet." },
 ];
 
+const shopPerks = [
+  { icon: Truck, text: "Livraison partout au Maroc" },
+  { icon: Wallet, text: "Paiement à la livraison" },
+  { icon: Check, text: "Références disponibles en stock" },
+];
+
+/** Feeds the cursor position to the .spotlight CSS highlight. */
+function trackPointer(e: MouseEvent<HTMLElement>) {
+  const rect = e.currentTarget.getBoundingClientRect();
+  e.currentTarget.style.setProperty("--mx", `${e.clientX - rect.left}px`);
+  e.currentTarget.style.setProperty("--my", `${e.clientY - rect.top}px`);
+}
+
 function Home() {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -121,7 +134,7 @@ function Home() {
     <>
       {/* HERO */}
       <section
-        className="relative isolate flex min-h-[100svh] items-center overflow-hidden bg-ink"
+        className="relative isolate flex min-h-[100svh] items-center overflow-hidden bg-ink pb-16"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
@@ -143,135 +156,169 @@ function Home() {
             />
           </motion.div>
         </AnimatePresence>
-        <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/80 to-ink/30" />
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 opacity-[0.07]"
-          style={{
-            backgroundImage:
-              "linear-gradient(var(--color-ink-foreground) 1px, transparent 1px), linear-gradient(90deg, var(--color-ink-foreground) 1px, transparent 1px)",
-            backgroundSize: "72px 72px",
-          }}
-        />
+        <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/85 to-ink/25" />
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-ink to-transparent" />
+        <div aria-hidden="true" className="hero-grid" />
+        <div aria-hidden="true" className="hero-glow" />
 
-        <div className="container-page relative py-28">
-          <span className="eyebrow">Courant faible · Sécurité électronique</span>
-          <h1 className="mt-5 max-w-4xl text-4xl leading-[1.05] text-ink-foreground sm:text-5xl lg:text-[4rem]">
-            {words.map((word, i) => (
-              <motion.span
-                key={`${index}-${word}-${i}`}
-                className="mr-[0.28em] inline-block"
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, ease: EASE, delay: i * 0.06 }}
-              >
-                {word}
-              </motion.span>
-            ))}
-          </h1>
-          <motion.p
-            key={`sub-${index}`}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: EASE, delay: words.length * 0.06 + 0.12 }}
-            className="mt-6 max-w-2xl text-base leading-relaxed text-ink-foreground/80 sm:text-lg"
-          >
-            Depuis 2009, Districap importe et distribue les solutions de courant faible des
-            plus grandes marques internationales, pour les professionnels, les entreprises
-            et les grands comptes.
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: EASE, delay: words.length * 0.06 + 0.24 }}
-            className="mt-9 flex flex-wrap gap-3"
-          >
-            <Link
-              to="/solutions"
-              className="sheen glow-pulse group inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground transition-transform duration-200 active:scale-[0.97]"
-            >
-              Découvrir nos solutions
-              <ArrowRight
-                strokeWidth={1.75}
-                className="size-4 transition-transform duration-200 group-hover:translate-x-1"
-              />
-            </Link>
-            <Link
-              to="/devis"
-              className="inline-flex items-center gap-2 rounded-md border border-ink-foreground/35 px-6 py-3.5 text-sm font-semibold text-ink-foreground transition-colors duration-200 hover:border-ink-foreground"
-            >
-              Demander un devis
-            </Link>
-          </motion.div>
-
-          {/* Indicators */}
-          <div className="mt-14 flex items-center gap-5">
-            {slides.map((s, i) => (
-              <button
-                key={s.alt}
-                type="button"
-                onClick={() => setIndex(i)}
-                aria-label={`Afficher la diapositive ${i + 1}`}
-                className="group flex items-center gap-3"
-              >
-                <span
-                  className={
-                    i === index
-                      ? "text-sm font-semibold text-ink-foreground"
-                      : "text-sm font-semibold text-ink-foreground/40"
-                  }
+        <div className="container-page relative grid items-center gap-12 py-28 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,0.6fr)]">
+          <div>
+            <span className="eyebrow">Courant faible · Sécurité électronique</span>
+            <h1 className="mt-5 max-w-4xl text-4xl leading-[1.05] text-ink-foreground sm:text-5xl lg:text-[4rem]">
+              {words.map((word, i) => (
+                <motion.span
+                  key={`${index}-${word}-${i}`}
+                  className="mr-[0.28em] inline-block"
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, ease: EASE, delay: i * 0.06 }}
                 >
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span className="relative block h-[2px] w-12 bg-ink-foreground/25">
-                  {i === index ? (
-                    <motion.span
-                      key={`bar-${index}-${paused}`}
-                      className="absolute inset-y-0 left-0 bg-primary"
-                      initial={{ width: "0%" }}
-                      animate={{ width: paused ? "40%" : "100%" }}
-                      transition={{ duration: paused ? 0.3 : 7, ease: "linear" }}
-                    />
-                  ) : null}
-                </span>
-              </button>
-            ))}
+                  {word}
+                </motion.span>
+              ))}
+            </h1>
+            <motion.p
+              key={`sub-${index}`}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: EASE, delay: words.length * 0.06 + 0.12 }}
+              className="mt-6 max-w-2xl text-base leading-relaxed text-ink-foreground/80 sm:text-lg"
+            >
+              Depuis 2009, Districap importe et distribue les solutions de courant faible des
+              plus grandes marques internationales, pour les professionnels, les entreprises
+              et les grands comptes.
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: EASE, delay: words.length * 0.06 + 0.24 }}
+              className="mt-9 flex flex-wrap gap-3"
+            >
+              <Link
+                to="/solutions"
+                className="sheen glow-pulse group inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground transition-transform duration-200 active:scale-[0.97]"
+              >
+                Découvrir nos solutions
+                <ArrowRight
+                  strokeWidth={1.75}
+                  className="size-4 transition-transform duration-200 group-hover:translate-x-1"
+                />
+              </Link>
+              <Link
+                to="/devis"
+                className="glass inline-flex items-center gap-2 rounded-md px-6 py-3.5 text-sm font-semibold text-ink-foreground transition-colors duration-200 hover:border-ink-foreground"
+              >
+                Demander un devis
+              </Link>
+            </motion.div>
+
+            {/* Indicators */}
+            <div className="mt-14 flex items-center gap-5">
+              {slides.map((s, i) => (
+                <button
+                  key={s.alt}
+                  type="button"
+                  onClick={() => setIndex(i)}
+                  aria-label={`Afficher la diapositive ${i + 1}`}
+                  className="group flex items-center gap-3"
+                >
+                  <span
+                    className={
+                      i === index
+                        ? "text-sm font-semibold text-ink-foreground"
+                        : "text-sm font-semibold text-ink-foreground/40"
+                    }
+                  >
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="relative block h-[2px] w-12 bg-ink-foreground/25">
+                    {i === index ? (
+                      <motion.span
+                        key={`bar-${index}-${paused}`}
+                        className="absolute inset-y-0 left-0 bg-primary"
+                        initial={{ width: "0%" }}
+                        animate={{ width: paused ? "40%" : "100%" }}
+                        transition={{ duration: paused ? 0.3 : 7, ease: "linear" }}
+                      />
+                    ) : null}
+                  </span>
+                </button>
+              ))}
+            </div>
           </div>
+
+          {/* Exclusive brands glass panel */}
+          <motion.aside
+            initial={{ opacity: 0, x: 32 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, ease: EASE, delay: 0.5 }}
+            className="glass hidden rounded-2xl p-6 text-ink-foreground lg:block"
+          >
+            <p className="text-sm font-semibold">Distributeur exclusif au Maroc</p>
+            <ul className="mt-3">
+              {exclusiveBrands.map((brand) => (
+                <li key={brand.name} className="glass-row text-sm font-medium">
+                  <span className="truncate">{brand.name}</span>
+                  <BadgeCheck strokeWidth={1.75} className="size-4 shrink-0 text-primary" />
+                </li>
+              ))}
+            </ul>
+            <Link
+              to="/marques"
+              className="link-underline mt-4 inline-block text-xs font-semibold text-ink-foreground/80"
+            >
+              Voir toutes les marques
+            </Link>
+          </motion.aside>
         </div>
 
         <motion.div
           aria-hidden="true"
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-7 left-1/2 -translate-x-1/2 text-ink-foreground/60"
+          className="absolute bottom-20 left-1/2 hidden -translate-x-1/2 text-ink-foreground/60 md:block"
         >
           <ChevronDown strokeWidth={1.75} className="size-6" />
         </motion.div>
       </section>
 
-      {/* CHIFFRES */}
-      <section className="border-b border-border bg-surface">
-        <div className="container-page grid grid-cols-2 gap-8 py-14 lg:grid-cols-4">
-          {site.figures.map((f, i) => (
-            <Reveal key={f.label} delay={i * 0.07} className="text-center lg:text-left">
-              <p className="text-4xl font-bold tracking-tight text-primary sm:text-5xl">
-                <CountUp value={f.value} prefix={f.prefix} suffix={f.suffix} />
-              </p>
-              <p className="mt-2 text-sm text-muted-foreground">{f.label}</p>
-            </Reveal>
-          ))}
+      {/* CHIFFRES — floating strip overlapping the hero */}
+      <section className="stat-strip">
+        <div className="container-page">
+          <div className="card-elevated grid grid-cols-2 border border-border bg-background lg:grid-cols-4">
+            {site.figures.map((f, i) => (
+              <Reveal key={f.label} delay={i * 0.07} className="stat-cell">
+                <p className="text-4xl font-bold tracking-tight text-primary sm:text-5xl">
+                  <CountUp value={f.value} prefix={f.prefix} suffix={f.suffix} />
+                </p>
+                <p className="mt-2 pb-3 text-sm text-muted-foreground">{f.label}</p>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* SOLUTIONS */}
+      {/* SOLUTIONS — sticky intro + grid */}
       <section className="section-y">
-        <div className="container-page">
-          <SectionTitle
-            eyebrow="Nos solutions"
-            title="Huit familles de solutions pour vos projets"
-            description="De la détection incendie au précâblage informatique, Districap couvre l'ensemble de la chaîne du courant faible avec les gammes des grandes marques internationales."
-          />
-          <Stagger className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="container-page grid gap-12 lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] lg:gap-16">
+          <div className="lg:sticky lg:top-28 lg:self-start">
+            <SectionTitle
+              eyebrow="Nos solutions"
+              title="Huit familles de solutions pour vos projets"
+              description="De la détection incendie au précâblage informatique, Districap couvre l'ensemble de la chaîne du courant faible avec les gammes des grandes marques internationales."
+            />
+            <Link
+              to="/solutions"
+              className="sheen group mt-8 inline-flex items-center gap-2 rounded-md bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition-transform duration-200 active:scale-[0.97]"
+            >
+              Toutes les solutions
+              <ArrowRight
+                strokeWidth={1.75}
+                className="size-4 transition-transform duration-200 group-hover:translate-x-1"
+              />
+            </Link>
+          </div>
+          <Stagger className="grid gap-5 sm:grid-cols-2">
             {solutions.map((solution) => (
               <StaggerItem key={solution.slug}>
                 <SolutionCard solution={solution} />
@@ -281,7 +328,7 @@ function Home() {
         </div>
       </section>
 
-      {/* EXCLUSIVITÉS */}
+      {/* EXCLUSIVITÉS — editorial rows with cursor spotlight */}
       <section className="section-y bg-ink">
         <div className="container-page">
           <SectionTitle
@@ -290,31 +337,32 @@ function Home() {
             title="Cinq marques distribuées en exclusivité"
             description="Districap est le distributeur exclusif de ces marques au Maroc, avec le stock, le support technique et la documentation associés."
           />
-          <Stagger className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+          <ul className="mt-14 border-t border-ink-foreground/15">
             {exclusiveBrands.map((brand) => (
-              <StaggerItem key={brand.name}>
-                <div className="h-full rounded-xl border border-ink-foreground/15 p-6 transition-colors duration-300 hover:border-primary">
-                  <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2">
-                    <h3 className="truncate text-lg text-ink-foreground">{brand.name}</h3>
-                    <BadgeCheck strokeWidth={1.75} className="size-5 shrink-0 text-primary" />
+              <li key={brand.name}>
+                <div className="brand-row spotlight" onMouseMove={trackPointer}>
+                  <div className="min-w-0">
+                    <h3 className="brand-name truncate">{brand.name}</h3>
+                    {brand.note ? (
+                      <span className="mt-3 inline-block rounded-full bg-primary px-2.5 py-0.5 text-[0.65rem] font-semibold uppercase tracking-wider text-primary-foreground">
+                        {brand.note}
+                      </span>
+                    ) : null}
                   </div>
-                  {brand.note ? (
-                    <span className="mt-2 inline-block rounded-full bg-primary px-2.5 py-0.5 text-[0.65rem] font-semibold uppercase tracking-wider text-primary-foreground">
-                      {brand.note}
-                    </span>
-                  ) : null}
-                  <p className="mt-3 text-sm leading-relaxed text-ink-foreground/70">
-                    {brand.description}
-                  </p>
+                  <p className="brand-desc">{brand.description}</p>
+                  <BadgeCheck
+                    strokeWidth={1.75}
+                    className="size-6 shrink-0 self-start text-primary md:self-center"
+                  />
                 </div>
-              </StaggerItem>
+              </li>
             ))}
-          </Stagger>
+          </ul>
         </div>
       </section>
 
       {/* MARQUES */}
-      <section className="section-y">
+      <section className="section-y overflow-hidden">
         <div className="container-page">
           <SectionTitle
             align="center"
@@ -322,36 +370,37 @@ function Home() {
             title="Plus de dix partenariats internationaux"
           />
         </div>
-        <div className="mt-12">
+        <div className="marquee-mask mt-12">
           <BrandMarquee />
         </div>
         <div className="container-page mt-10 text-center">
-          <Link
-            to="/marques"
-            className="link-underline text-sm font-semibold text-primary"
-          >
+          <Link to="/marques" className="link-underline text-sm font-semibold text-primary">
             Voir toutes les marques
           </Link>
         </div>
       </section>
 
-      {/* POURQUOI */}
+      {/* POURQUOI — statement left, 2x2 cards right */}
       <section className="section-y bg-surface">
-        <div className="container-page">
-          <SectionTitle
-            eyebrow="Pourquoi Districap"
-            title="Une référence nationale en qualité, en offre et en service"
-            description="Notre stratégie : rester constamment à jour des évolutions technologiques de la sécurité électronique, et tenir nos engagements de délais."
-          />
-          <Stagger className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="container-page grid gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)] lg:items-center">
+          <div>
+            <SectionTitle
+              eyebrow="Pourquoi Districap"
+              title="Une référence nationale en qualité, en offre et en service"
+              description="Notre stratégie : rester constamment à jour des évolutions technologiques de la sécurité électronique, et tenir nos engagements de délais."
+            />
+            <p aria-hidden="true" className="ghost-number mt-10">
+              2009
+            </p>
+          </div>
+          <Stagger className="grid gap-5 sm:grid-cols-2">
             {whyPoints.map((p) => (
               <StaggerItem key={p.title}>
-                <div className="card-elevated group h-full border border-border p-6 transition-transform duration-300 hover:-translate-y-1">
-                  <p.icon
-                    strokeWidth={1.75}
-                    className="size-7 text-foreground transition-all duration-200 group-hover:-translate-y-0.5 group-hover:text-primary"
-                  />
-                  <h3 className="mt-5 text-lg">{p.title}</h3>
+                <div className="why-card card-elevated h-full border border-border bg-background p-7">
+                  <span className="chip-icon">
+                    <p.icon strokeWidth={1.75} className="size-6" />
+                  </span>
+                  <h3 className="mt-6 text-lg">{p.title}</h3>
                   <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground">
                     {p.text}
                   </p>
@@ -362,7 +411,7 @@ function Home() {
         </div>
       </section>
 
-      {/* MÉTHODE */}
+      {/* MÉTHODE — vertical on mobile, horizontal timeline on desktop */}
       <section className="section-y">
         <div className="container-page">
           <SectionTitle
@@ -370,36 +419,27 @@ function Home() {
             title="Cinq étapes, du besoin à l'accompagnement"
             description="Chaque projet est préparé en amont : nos équipes évaluent les enjeux, orientent les choix techniques et gèrent les phases de déploiement."
           />
-          <div className="relative mt-14">
-            <motion.span
-              className="absolute left-4 top-0 hidden h-full w-[2px] origin-top bg-primary lg:left-0 lg:top-6 lg:h-[2px] lg:w-full lg:origin-left lg:block"
-              initial={{ scaleX: 0 }}
-              whileInView={{ scaleX: 1 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 1, ease: EASE }}
-            />
-            <Stagger className="grid gap-8 lg:grid-cols-5" step={0.12}>
-              {method.map((step, i) => (
-                <StaggerItem key={step.title}>
-                  <div className="relative">
-                    <motion.span
-                      className="grid size-12 place-items-center rounded-full bg-primary text-sm font-bold text-primary-foreground"
-                      initial={{ scale: 0.6, opacity: 0 }}
-                      whileInView={{ scale: 1, opacity: 1 }}
-                      viewport={{ once: true, margin: "-80px" }}
-                      transition={{ duration: 0.4, ease: EASE, delay: i * 0.1 }}
-                    >
-                      {String(i + 1).padStart(2, "0")}
-                    </motion.span>
-                    <h3 className="mt-5 text-lg">{step.title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                      {step.text}
-                    </p>
-                  </div>
-                </StaggerItem>
-              ))}
-            </Stagger>
-          </div>
+          <ol className="timeline mt-16 grid gap-10 lg:grid-cols-5 lg:gap-8">
+            {method.map((step, i) => (
+              <li key={step.title} className="timeline-step">
+                <motion.span
+                  className="timeline-node"
+                  initial={{ scale: 0.6, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{ duration: 0.4, ease: EASE, delay: i * 0.1 }}
+                >
+                  {String(i + 1).padStart(2, "0")}
+                </motion.span>
+                <Reveal delay={i * 0.1}>
+                  <h3 className="mt-0 text-lg lg:mt-6">{step.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {step.text}
+                  </p>
+                </Reveal>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
 
@@ -413,32 +453,40 @@ function Home() {
             />
             <Link
               to="/references"
-              className="link-underline hidden shrink-0 pb-2 text-sm font-semibold text-primary sm:block"
+              className="group hidden shrink-0 items-center gap-2 pb-2 text-sm font-semibold text-primary sm:inline-flex"
             >
               Toutes les références
+              <ArrowRight
+                strokeWidth={1.75}
+                className="size-4 transition-transform duration-200 group-hover:translate-x-1"
+              />
             </Link>
           </div>
-          <Stagger className="mt-12 grid gap-5 md:grid-cols-3">
+          <Stagger className="mt-12 grid gap-6 md:grid-cols-3">
             {projects.slice(0, 3).map((project) => (
               <StaggerItem key={project.slug}>
                 <ProjectCard project={project} />
               </StaggerItem>
             ))}
           </Stagger>
+          <div className="mt-8 text-center sm:hidden">
+            <Link to="/references" className="link-underline text-sm font-semibold text-primary">
+              Toutes les références
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* BOUTIQUE */}
+      {/* BOUTIQUE — dark panel */}
       <section className="section-y">
         <div className="container-page">
-          <Reveal className="card-elevated grid gap-8 border border-border p-8 lg:grid-cols-[1.2fr_1fr] lg:p-12">
+          <Reveal className="shop-panel grid gap-10 p-8 lg:grid-cols-[1.2fr_1fr] lg:p-14">
             <div>
               <span className="eyebrow">Boutique en ligne</span>
-              <h2 className="mt-3 text-2xl leading-tight sm:text-3xl">
-                Besoin d'équipements en livraison rapide ? Découvrez notre boutique en
-                ligne
+              <h2 className="mt-3 text-2xl leading-tight text-ink-foreground sm:text-3xl lg:text-4xl">
+                Besoin d'équipements en livraison rapide ? Découvrez notre boutique en ligne
               </h2>
-              <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+              <p className="mt-4 max-w-xl text-base leading-relaxed text-ink-foreground/75">
                 Commandez directement les références disponibles en stock. Livraison
                 partout au Maroc et paiement à la livraison.
               </p>
@@ -446,21 +494,23 @@ function Home() {
                 href={site.storeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="sheen mt-7 inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-transform duration-200 active:scale-[0.97]"
+                className="sheen glow-pulse mt-8 inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground transition-transform duration-200 active:scale-[0.97]"
               >
                 <ShoppingBag strokeWidth={1.75} className="size-4" />
                 Accéder à la boutique
                 <ExternalLink strokeWidth={1.75} className="size-4" />
               </a>
             </div>
-            <ul className="space-y-4 self-center">
-              {[
-                { icon: Truck, text: "Livraison partout au Maroc" },
-                { icon: Wallet, text: "Paiement à la livraison" },
-                { icon: Check, text: "Références disponibles en stock" },
-              ].map((item) => (
-                <li key={item.text} className="flex items-center gap-3 rounded-lg bg-surface p-4">
-                  <item.icon strokeWidth={1.75} className="size-5 shrink-0 text-primary" />
+            <ul className="space-y-3 self-center">
+              {shopPerks.map((item) => (
+                <li
+                  key={item.text}
+                  className="glass spotlight flex items-center gap-4 rounded-xl p-4"
+                  onMouseMove={trackPointer}
+                >
+                  <span className="grid size-10 shrink-0 place-items-center rounded-lg bg-primary text-primary-foreground">
+                    <item.icon strokeWidth={1.75} className="size-5" />
+                  </span>
                   <span className="text-sm font-medium">{item.text}</span>
                 </li>
               ))}

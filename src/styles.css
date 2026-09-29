@@ -300,3 +300,304 @@
     scroll-behavior: auto;
   }
 }
+
+/* Paste into your global stylesheet (after the Tailwind import / theme tokens). */
+
+/* ---------- Hero ---------- */
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.07;
+  background-image:
+    linear-gradient(var(--color-ink-foreground) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-ink-foreground) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(to right, black 30%, transparent 85%);
+}
+
+.hero-glow {
+  position: absolute;
+  right: -10%;
+  bottom: -25%;
+  width: 60vw;
+  height: 60vw;
+  border-radius: 9999px;
+  background: radial-gradient(
+    closest-side,
+    color-mix(in oklab, var(--color-primary) 38%, transparent),
+    transparent
+  );
+  filter: blur(40px);
+  pointer-events: none;
+}
+
+.glass {
+  background: color-mix(in oklab, var(--color-ink-foreground) 8%, transparent);
+  border: 1px solid color-mix(in oklab, var(--color-ink-foreground) 20%, transparent);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+}
+
+.glass-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid color-mix(in oklab, var(--color-ink-foreground) 14%, transparent);
+  transition: padding-left 0.25s ease, color 0.25s ease;
+}
+.glass-row:last-child {
+  border-bottom: 0;
+}
+.glass-row:hover {
+  padding-left: 0.5rem;
+  color: var(--color-primary);
+}
+
+/* ---------- Figures strip ---------- */
+.stat-strip {
+  position: relative;
+  z-index: 10;
+  margin-top: -3.5rem;
+}
+.stat-cell {
+  position: relative;
+  padding: 1.75rem 1.5rem;
+}
+.stat-cell::after {
+  content: "";
+  position: absolute;
+  left: 1.5rem;
+  bottom: 0;
+  height: 3px;
+  width: 2.5rem;
+  border-radius: 9999px;
+  background: var(--color-primary);
+  transition: width 0.35s ease;
+}
+.stat-cell:hover::after {
+  width: 5rem;
+}
+@media (min-width: 1024px) {
+  .stat-cell + .stat-cell {
+    border-left: 1px solid var(--color-border);
+  }
+}
+
+/* ---------- Spotlight (cursor-follow highlight) ---------- */
+.spotlight {
+  position: relative;
+  isolation: isolate;
+}
+.spotlight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: radial-gradient(
+    420px circle at var(--mx, 50%) var(--my, 50%),
+    color-mix(in oklab, var(--color-primary) 24%, transparent),
+    transparent 65%
+  );
+}
+.spotlight:hover::before {
+  opacity: 1;
+}
+
+/* ---------- Exclusive brands rows ---------- */
+.brand-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.75rem 1.5rem;
+  align-items: center;
+  padding: 1.75rem 1rem;
+  border-bottom: 1px solid color-mix(in oklab, var(--color-ink-foreground) 15%, transparent);
+  transition: padding-left 0.3s ease;
+}
+.brand-row:hover {
+  padding-left: 2rem;
+}
+.brand-name {
+  font-size: clamp(1.9rem, 4.5vw, 3.4rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--color-ink-foreground);
+  transition: color 0.3s ease;
+}
+.brand-row:hover .brand-name {
+  color: var(--color-primary);
+}
+.brand-desc {
+  grid-column: 1 / -1;
+  max-width: 42rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: color-mix(in oklab, var(--color-ink-foreground) 68%, transparent);
+}
+@media (min-width: 900px) {
+  .brand-row {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.4fr) auto;
+  }
+  .brand-desc {
+    grid-column: auto;
+  }
+}
+
+/* ---------- Marquee fade edges ---------- */
+.marquee-mask {
+  mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+}
+
+/* ---------- Why section ---------- */
+.ghost-number {
+  font-size: clamp(6rem, 16vw, 12rem);
+  font-weight: 800;
+  line-height: 0.85;
+  letter-spacing: -0.05em;
+  color: transparent;
+  -webkit-text-stroke: 1.5px color-mix(in oklab, var(--color-primary) 55%, transparent);
+  user-select: none;
+}
+
+.chip-icon {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.85rem;
+  color: var(--color-primary);
+  background: color-mix(in oklab, var(--color-primary) 12%, transparent);
+  transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+.why-card:hover .chip-icon {
+  background: var(--color-primary);
+  color: var(--color-primary-foreground);
+  transform: rotate(-6deg);
+}
+.why-card {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+.why-card::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+  background: var(--color-primary);
+  transition: transform 0.4s ease;
+}
+.why-card:hover {
+  transform: translateY(-4px);
+  border-color: color-mix(in oklab, var(--color-primary) 50%, var(--color-border));
+}
+.why-card:hover::after {
+  transform: scaleX(1);
+}
+
+/* ---------- Method timeline ---------- */
+.timeline {
+  position: relative;
+}
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 1.5rem;
+  top: 1.5rem;
+  bottom: 1.5rem;
+  width: 2px;
+  background: linear-gradient(var(--color-primary), var(--color-border));
+}
+.timeline-node {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-primary-foreground);
+  background: var(--color-primary);
+  box-shadow: 0 0 0 8px var(--color-background);
+}
+.timeline-step {
+  position: relative;
+  padding-left: 4.5rem;
+}
+.timeline-step .timeline-node {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+@media (min-width: 1024px) {
+  .timeline::before {
+    left: 0;
+    right: 0;
+    top: 1.5rem;
+    bottom: auto;
+    width: auto;
+    height: 2px;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-border));
+  }
+  .timeline-step {
+    padding-left: 0;
+  }
+  .timeline-step .timeline-node {
+    position: relative;
+  }
+}
+
+/* ---------- Shop panel ---------- */
+.shop-panel {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  background: var(--color-ink);
+  color: var(--color-ink-foreground);
+}
+.shop-panel::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: -40%;
+  right: -10%;
+  width: 55%;
+  aspect-ratio: 1;
+  border-radius: 9999px;
+  background: radial-gradient(
+    closest-side,
+    color-mix(in oklab, var(--color-primary) 45%, transparent),
+    transparent
+  );
+  filter: blur(30px);
+}
+.shop-panel::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  opacity: 0.06;
+  background-image:
+    linear-gradient(var(--color-ink-foreground) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-ink-foreground) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass-row,
+  .brand-row,
+  .why-card,
+  .chip-icon,
+  .stat-cell::after {
+    transition: none;
+  }
+}
