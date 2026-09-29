@@ -61,7 +61,6 @@ const milestones = [
   { year: "Aujourd'hui", title: "Plus de dix partenariats", text: "Une offre complète, du stock et une boutique en ligne pour les achats rapides." },
 ];
 
-export default AboutPage;
 
 function AboutPage() {
   return (
