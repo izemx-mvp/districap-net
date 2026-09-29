@@ -13,6 +13,9 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DevisRouteImport } from './routes/devis'
 import { Route as MarquesRouteImport } from './routes/marques'
+import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
+import { Route as PlanDuSiteRouteImport } from './routes/plan-du-site'
+import { Route as PolitiqueDeConfidentialiteRouteImport } from './routes/politique-de-confidentialite'
 import { Route as QuiSommesNousRouteImport } from './routes/qui-sommes-nous'
 import { Route as ReferencesIndexRouteImport } from './routes/references.index'
 import { Route as ReferencesSlugRouteImport } from './routes/references.$slug'
@@ -39,6 +42,22 @@ const MarquesRoute = MarquesRouteImport.update({
   path: '/marques',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MentionsLegalesRoute = MentionsLegalesRouteImport.update({
+  id: '/mentions-legales',
+  path: '/mentions-legales',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlanDuSiteRoute = PlanDuSiteRouteImport.update({
+  id: '/plan-du-site',
+  path: '/plan-du-site',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PolitiqueDeConfidentialiteRoute =
+  PolitiqueDeConfidentialiteRouteImport.update({
+    id: '/politique-de-confidentialite',
+    path: '/politique-de-confidentialite',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const QuiSommesNousRoute = QuiSommesNousRouteImport.update({
   id: '/qui-sommes-nous',
   path: '/qui-sommes-nous',
@@ -70,6 +89,9 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/devis': typeof DevisRoute
   '/marques': typeof MarquesRoute
+  '/mentions-legales': typeof MentionsLegalesRoute
+  '/plan-du-site': typeof PlanDuSiteRoute
+  '/politique-de-confidentialite': typeof PolitiqueDeConfidentialiteRoute
   '/qui-sommes-nous': typeof QuiSommesNousRoute
   '/references/$slug': typeof ReferencesSlugRoute
   '/solutions/$slug': typeof SolutionsSlugRoute
@@ -81,6 +103,9 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/devis': typeof DevisRoute
   '/marques': typeof MarquesRoute
+  '/mentions-legales': typeof MentionsLegalesRoute
+  '/plan-du-site': typeof PlanDuSiteRoute
+  '/politique-de-confidentialite': typeof PolitiqueDeConfidentialiteRoute
   '/qui-sommes-nous': typeof QuiSommesNousRoute
   '/references/$slug': typeof ReferencesSlugRoute
   '/solutions/$slug': typeof SolutionsSlugRoute
@@ -93,6 +118,9 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/devis': typeof DevisRoute
   '/marques': typeof MarquesRoute
+  '/mentions-legales': typeof MentionsLegalesRoute
+  '/plan-du-site': typeof PlanDuSiteRoute
+  '/politique-de-confidentialite': typeof PolitiqueDeConfidentialiteRoute
   '/qui-sommes-nous': typeof QuiSommesNousRoute
   '/references/$slug': typeof ReferencesSlugRoute
   '/solutions/$slug': typeof SolutionsSlugRoute
@@ -106,6 +134,9 @@ export interface FileRouteTypes {
     | '/contact'
     | '/devis'
     | '/marques'
+    | '/mentions-legales'
+    | '/plan-du-site'
+    | '/politique-de-confidentialite'
     | '/qui-sommes-nous'
     | '/references/$slug'
     | '/solutions/$slug'
@@ -117,6 +148,9 @@ export interface FileRouteTypes {
     | '/contact'
     | '/devis'
     | '/marques'
+    | '/mentions-legales'
+    | '/plan-du-site'
+    | '/politique-de-confidentialite'
     | '/qui-sommes-nous'
     | '/references/$slug'
     | '/solutions/$slug'
@@ -128,6 +162,9 @@ export interface FileRouteTypes {
     | '/contact'
     | '/devis'
     | '/marques'
+    | '/mentions-legales'
+    | '/plan-du-site'
+    | '/politique-de-confidentialite'
     | '/qui-sommes-nous'
     | '/references/$slug'
     | '/solutions/$slug'
@@ -140,6 +177,9 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   DevisRoute: typeof DevisRoute
   MarquesRoute: typeof MarquesRoute
+  MentionsLegalesRoute: typeof MentionsLegalesRoute
+  PlanDuSiteRoute: typeof PlanDuSiteRoute
+  PolitiqueDeConfidentialiteRoute: typeof PolitiqueDeConfidentialiteRoute
   QuiSommesNousRoute: typeof QuiSommesNousRoute
   ReferencesSlugRoute: typeof ReferencesSlugRoute
   SolutionsSlugRoute: typeof SolutionsSlugRoute
@@ -175,6 +215,27 @@ declare module '@tanstack/react-router' {
       path: '/marques'
       fullPath: '/marques'
       preLoaderRoute: typeof MarquesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mentions-legales': {
+      id: '/mentions-legales'
+      path: '/mentions-legales'
+      fullPath: '/mentions-legales'
+      preLoaderRoute: typeof MentionsLegalesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/plan-du-site': {
+      id: '/plan-du-site'
+      path: '/plan-du-site'
+      fullPath: '/plan-du-site'
+      preLoaderRoute: typeof PlanDuSiteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/politique-de-confidentialite': {
+      id: '/politique-de-confidentialite'
+      path: '/politique-de-confidentialite'
+      fullPath: '/politique-de-confidentialite'
+      preLoaderRoute: typeof PolitiqueDeConfidentialiteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/qui-sommes-nous': {
@@ -220,6 +281,9 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   DevisRoute: DevisRoute,
   MarquesRoute: MarquesRoute,
+  MentionsLegalesRoute: MentionsLegalesRoute,
+  PlanDuSiteRoute: PlanDuSiteRoute,
+  PolitiqueDeConfidentialiteRoute: PolitiqueDeConfidentialiteRoute,
   QuiSommesNousRoute: QuiSommesNousRoute,
   ReferencesSlugRoute: ReferencesSlugRoute,
   SolutionsSlugRoute: SolutionsSlugRoute,
