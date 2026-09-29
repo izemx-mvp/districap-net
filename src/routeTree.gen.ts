@@ -10,33 +10,141 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as DevisRouteImport } from './routes/devis'
+import { Route as MarquesRouteImport } from './routes/marques'
+import { Route as QuiSommesNousRouteImport } from './routes/qui-sommes-nous'
+import { Route as ReferencesIndexRouteImport } from './routes/references.index'
+import { Route as ReferencesSlugRouteImport } from './routes/references.$slug'
+import { Route as SolutionsIndexRouteImport } from './routes/solutions.index'
+import { Route as SolutionsSlugRouteImport } from './routes/solutions.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DevisRoute = DevisRouteImport.update({
+  id: '/devis',
+  path: '/devis',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MarquesRoute = MarquesRouteImport.update({
+  id: '/marques',
+  path: '/marques',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuiSommesNousRoute = QuiSommesNousRouteImport.update({
+  id: '/qui-sommes-nous',
+  path: '/qui-sommes-nous',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReferencesIndexRoute = ReferencesIndexRouteImport.update({
+  id: '/references/',
+  path: '/references/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReferencesSlugRoute = ReferencesSlugRouteImport.update({
+  id: '/references/$slug',
+  path: '/references/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SolutionsIndexRoute = SolutionsIndexRouteImport.update({
+  id: '/solutions/',
+  path: '/solutions/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SolutionsSlugRoute = SolutionsSlugRouteImport.update({
+  id: '/solutions/$slug',
+  path: '/solutions/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
+  '/devis': typeof DevisRoute
+  '/marques': typeof MarquesRoute
+  '/qui-sommes-nous': typeof QuiSommesNousRoute
+  '/references/$slug': typeof ReferencesSlugRoute
+  '/solutions/$slug': typeof SolutionsSlugRoute
+  '/references/': typeof ReferencesIndexRoute
+  '/solutions/': typeof SolutionsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
+  '/devis': typeof DevisRoute
+  '/marques': typeof MarquesRoute
+  '/qui-sommes-nous': typeof QuiSommesNousRoute
+  '/references/$slug': typeof ReferencesSlugRoute
+  '/solutions/$slug': typeof SolutionsSlugRoute
+  '/references': typeof ReferencesIndexRoute
+  '/solutions': typeof SolutionsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
+  '/devis': typeof DevisRoute
+  '/marques': typeof MarquesRoute
+  '/qui-sommes-nous': typeof QuiSommesNousRoute
+  '/references/$slug': typeof ReferencesSlugRoute
+  '/solutions/$slug': typeof SolutionsSlugRoute
+  '/references/': typeof ReferencesIndexRoute
+  '/solutions/': typeof SolutionsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/contact'
+    | '/devis'
+    | '/marques'
+    | '/qui-sommes-nous'
+    | '/references/$slug'
+    | '/solutions/$slug'
+    | '/references/'
+    | '/solutions/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/contact'
+    | '/devis'
+    | '/marques'
+    | '/qui-sommes-nous'
+    | '/references/$slug'
+    | '/solutions/$slug'
+    | '/references'
+    | '/solutions'
+  id:
+    | '__root__'
+    | '/'
+    | '/contact'
+    | '/devis'
+    | '/marques'
+    | '/qui-sommes-nous'
+    | '/references/$slug'
+    | '/solutions/$slug'
+    | '/references/'
+    | '/solutions/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ContactRoute: typeof ContactRoute
+  DevisRoute: typeof DevisRoute
+  MarquesRoute: typeof MarquesRoute
+  QuiSommesNousRoute: typeof QuiSommesNousRoute
+  ReferencesSlugRoute: typeof ReferencesSlugRoute
+  SolutionsSlugRoute: typeof SolutionsSlugRoute
+  ReferencesIndexRoute: typeof ReferencesIndexRoute
+  SolutionsIndexRoute: typeof SolutionsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +156,75 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/devis': {
+      id: '/devis'
+      path: '/devis'
+      fullPath: '/devis'
+      preLoaderRoute: typeof DevisRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/marques': {
+      id: '/marques'
+      path: '/marques'
+      fullPath: '/marques'
+      preLoaderRoute: typeof MarquesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/qui-sommes-nous': {
+      id: '/qui-sommes-nous'
+      path: '/qui-sommes-nous'
+      fullPath: '/qui-sommes-nous'
+      preLoaderRoute: typeof QuiSommesNousRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/references/': {
+      id: '/references/'
+      path: '/references'
+      fullPath: '/references/'
+      preLoaderRoute: typeof ReferencesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/references/$slug': {
+      id: '/references/$slug'
+      path: '/references/$slug'
+      fullPath: '/references/$slug'
+      preLoaderRoute: typeof ReferencesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/solutions/': {
+      id: '/solutions/'
+      path: '/solutions'
+      fullPath: '/solutions/'
+      preLoaderRoute: typeof SolutionsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/solutions/$slug': {
+      id: '/solutions/$slug'
+      path: '/solutions/$slug'
+      fullPath: '/solutions/$slug'
+      preLoaderRoute: typeof SolutionsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ContactRoute: ContactRoute,
+  DevisRoute: DevisRoute,
+  MarquesRoute: MarquesRoute,
+  QuiSommesNousRoute: QuiSommesNousRoute,
+  ReferencesSlugRoute: ReferencesSlugRoute,
+  SolutionsSlugRoute: SolutionsSlugRoute,
+  ReferencesIndexRoute: ReferencesIndexRoute,
+  SolutionsIndexRoute: SolutionsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
