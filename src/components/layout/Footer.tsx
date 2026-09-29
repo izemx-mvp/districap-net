@@ -97,13 +97,13 @@ export function Footer() {
         <div>
           <h3 className="text-sm font-semibold uppercase tracking-wider">Entreprise</h3>
           <ul className="mt-5 space-y-2">
-            {[
+            {([
               { label: "Qui sommes-nous", to: "/qui-sommes-nous" },
               { label: "Références", to: "/references" },
               { label: "Marques", to: "/marques" },
               { label: "Contact", to: "/contact" },
               { label: "Demander un devis", to: "/devis" },
-            ].map((l) => (
+            ] as const).map((l) => (
               <li key={l.to}>
                 <Link
                   to={l.to}
@@ -118,11 +118,11 @@ export function Footer() {
             Informations
           </h3>
           <ul className="mt-5 space-y-2">
-            {[
+            {([
               { label: "Mentions légales", to: "/mentions-legales" },
               { label: "Politique de confidentialité", to: "/politique-de-confidentialite" },
               { label: "Plan du site", to: "/plan-du-site" },
-            ].map((l) => (
+            ] as const).map((l) => (
               <li key={l.to}>
                 <Link
                   to={l.to}

@@ -44,9 +44,9 @@ export function PageHero({
                 <li key={c.label} className="flex items-center gap-1.5">
                   <ChevronRight strokeWidth={1.75} className="size-3.5" />
                   {c.to ? (
-                    <Link to={c.to} className="hover:text-primary">
+                    <a href={c.to} className="hover:text-primary">
                       {c.label}
-                    </Link>
+                    </a>
                   ) : (
                     <span className="text-ink-foreground/90">{c.label}</span>
                   )}
